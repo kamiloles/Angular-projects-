@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<script src="jquery.js"></script>
+</head>
+
+<body>
+    <div class="game-menu" id="game-menu">
+        <div class="start-game" onclick="startGame()">
+            <h1>Zacznij Grę</h1>
+        </div>
+        <div class="timer" id="timer-container">
+            <h3 id="timer">5</h3>
+        </div>
+        <div class="game-ower" id="game-ower">
+            <h3>Koniec gry!</h3>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script src="js.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARkS-dsh-7IirtcQg3oSZEHudV6Uw9Iic&callback=initMap">
+        </script>
+    <script>
+        $('#timer-container').hide();
+        $('#game-ower').hide();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+body, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+.game-menu {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+.start-game {
+    margin: 0 auto;
+    width: 200;
+    text-align: center;
+    padding: 15px;
+    font-family: 'Franklin Gothic Medium';
+    background-color: #4400ffde;
+    color: white;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.start-game:hover {
+    box-shadow: 0px 0px 10px 2px #5aff00;
+}
+
+.timer {
+    margin: 0 auto;
+    width: 200px;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium';
+    color: #00ff00;
+    background-color: #4400ffde;
+    margin-top: 50px;
+}
+
+.timer h3 {
+    font-size: 96pt;
+}
+
+.game-ower {
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+    font-size: 50pt;
+    font-family: 'Franklin Gothic Medium';
+    color: #ffae00;
+    background-color: #4400ffde;
+    margin-top: 50px;
+}
+
+.game-ower h3 {
+    font-size: 50pt;
+}
+
+  
