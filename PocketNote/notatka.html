@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NotePocket</title>
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    </head>
+   <body background="bg.jpg">
+       <img src="logo.png" />
+    <div>
+        <div class="main">
+            <div class="row">
+                <div class="input-area col-md-5">
+                    <label for="header">Tytuł:</label>
+                    <input class="form-control" id="header-in" name="header-in" type="text" />
+                    <label for="header">Wiadomość:</label>
+                    <textarea class="form-control" id="content-in" name="content-in" type="text"></textarea>
+                    <p> <label for="header">Kolor:</label>
+                    <input class="form-control" id="color-in" name="color-in" type="color"></input></p>
+                    <button class="btn btn-success" onclick="addNote()"
+                        type="button">Zapisz notatkę</button>
+
+
+                </div>
+                <div class="notes-area col-lg-6">
+                    <div class="row " id="notes">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+	
+	
+	<script> 
+let today = new Date().toISOString().slice(0, 10);
+
+let time = new Date().toLocaleTimeString('pl-PL', { hour: "numeric", 
+                                             minute: "numeric"});
+var notes = [];
+
+function loadAllNotes() {
+    notes = JSON.parse(localStorage.getItem('notes'));
+    if (notes === undefined || notes == null) {
+        notes = [];
+    }
+}
+
+function addNote() {
+    notes.push({
+        id: new Date().getTime(),
+        title: document.getElementById('header-in').value,
+        content: document.getElementById('content-in').value,
+        data: today,
+        now: time,
+        color: document.getElementById('color-in').value
+    });
+    localStorage.setItem('notes', JSON.stringify(notes));
+    display();
+}
+function deleteNote(id) {
+    notes.forEach(note => {
+        if (note.id == id) {
+            notes.splice(notes.indexOf(note), 1);
+        }
+    });
+    localStorage.setItem('notes', JSON.stringify(notes));
+    display();
+}
+function display() {
+    $('#notes').html('');
+    notes.forEach(note => {
+        $('#notes').append(`
+            <div class="col-lg-6">
+                <div class="card-body card">
+                    <div class = "row">
+                        <div class = "col-md-12">
+                            <button style ="float:right;" class = "btn btn-danger" onclick="deleteNote(`+ note.id + `)">X</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class = "row">
+                            <div class = "col-md-6"><hr class = "marking" color = "`+ note.color + `"></div>
+                            <div class = "col-md-6" style = "text-align: right">`+ note.data + `</div>
+                            <div class = "col-md-6" style = "text-align: right">`+ note.now + `</div>
+                        </div>
+                        <h5 class="card-title">` + note.title + `</h5>
+                        <p class="card-text">` + note.content + `</p>
+                    </div>
+                </div>
+            </div>
+        `);
+    });
+}
+
+loadAllNotes();
+display();
+
+</script>
+
+<style>
+.btn {
+  background-color: rgb(240, 129, 25);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.card {
+    border-style: double solid;
+    padding: 1%;
+    
+}
+.main {
+    margin-top: 5px;
+    
+}
+.card-body {
+    
+    margin-left: 5px;
+    margin-right: 700px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+}
+.input-area {
+    
+    margin-left: 30px;
+    margin-right: 50px;
+}
+.notes-area {
+    border-left: 3px solid #000000;
+    padding-left: 15px;
+}
+.marking {
+    height: 7px;
+    width: 40%;
+    border-radius: 10px;
+    float: left;
+}
+</style>
+
+</html>

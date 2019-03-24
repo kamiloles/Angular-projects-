@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ball in a hole master</title>
+    <style>
+            #ball {
+                background: black;
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                border-radius: 50%;
+                transform: translateX(500px) translateY(50px);
+              }
+    </style>
+</head>
+<div id="ball"></div>
+
+<div id="app">
+        <p id="alpha">alpha: {{alpha}}</p>
+        <p id="beta">beta: {{beta}}</p>
+        <p id="gamma">gamma: {{gamma}}</p>
+          <br />
+          
+        </div>
+          
+    <script>
+
+var prevLR = 0, prevFB = 0;
+var curLR = 0, curFB = 0;
+var deltaLR = 0, deltaFB = 0;
+
+    init();
+    var count = 0;
+    
+    function init() {
+      if (window.DeviceOrientationEvent) {
+    
+        window.addEventListener('deviceorientation', function(eventData) {
+          var tiltLR = eventData.gamma;
+        
+          var tiltFB = eventData.beta;
+
+          var dir = eventData.alpha
+
+          deviceOrientationHandler(tiltLR, tiltFB, dir);
+          }, false);
+      } else {
+        alert("ISSUU");
+      }
+    }
+  
+function deviceOrientationHandler(tiltLR, tiltFB, dir) {
+      curLR = tiltLR;
+      
+      curFB = tiltFB;
+
+    }
+
+var ball = document.getElementById("ball");
+var ballx = window.innerWidth / 2, bally = window.innerHeight / 2;
+function tickFrame() {
+  deltaLR = curLR - prevLR;
+  deltaFB = curFB - prevFB;
+  prevLR = curLR;
+  prevFB = curFB;
+  ballx += deltaLR;
+  bally += deltaFB;
+  ball.style.transform = "translateX(" + ballx + "px) translateY(" + bally + "px)";
+}
+
+setInterval(tickFrame, 1000/60);
+    
+
+
+new Vue({
+  el: "#app",
+  created() {
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener(
+        "deviceorientation",
+        (event) => {
+          // alert(event.alpha)
+          console.log(event);
+      // Get the direction of the device (in degrees).
+
+          this.alpha = Math.round(event.alpha);
+    // Get the front-to-back tilt (in degrees).
+
+          this.beta = Math.round(event.beta);
+      // Get the left-to-right tilt (in degrees).
+
+          this.gamma = Math.round(event.gamma);
+        },
+        false
+      );
+    } else {
+      this.log = "Przeglądarka nie jest wspierana";
+    }
+  },
+  data() {
+    return {
+      alpha: "",
+      beta: "",
+      gamma: "",
+    };
+  }
+});
+
+    </script>
+
+</html>
